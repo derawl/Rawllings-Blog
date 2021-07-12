@@ -83,7 +83,7 @@ def load_user(user_id):
 def get_all_posts():
     ID=0
     user_id = current_user.get_id()
-    if user_id != None:
+    if len(user_id) > 0:
         ID = user_id
     posts = BlogPost.query.all()
 
