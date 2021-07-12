@@ -81,7 +81,10 @@ def load_user(user_id):
 
 @app.route('/')
 def get_all_posts():
-    ID = int(current_user.get_id())
+    ID=0
+    user_id = int(current_user.get_id())
+    if user_id != None:
+        ID = user_id
     posts = BlogPost.query.all()
 
     return render_template("index.html", all_posts=posts, id=ID, logged_in=current_user.is_authenticated)
