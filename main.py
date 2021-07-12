@@ -81,7 +81,7 @@ def load_user(user_id):
 
 @app.route('/')
 def get_all_posts():
-    ID = 1
+    ID = current_user.id
     posts = BlogPost.query.all()
 
     return render_template("index.html", all_posts=posts, id=ID, logged_in=current_user.is_authenticated)
@@ -137,7 +137,6 @@ def logout():
 
 
 @app.route("/post/<int:post_id>", methods=['GET', 'POST'])
-@login_required
 def show_post(post_id):
     form = CommentForm()
     requested_post = BlogPost.query.get(post_id)
@@ -154,13 +153,11 @@ def show_post(post_id):
 
 
 @app.route("/about")
-@login_required
 def about():
     return render_template("about.html", logged_in=True)
 
 
 @app.route("/contact")
-@login_required
 def contact():
     return render_template("contact.html", logged_in=True)
 
