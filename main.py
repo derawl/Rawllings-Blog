@@ -133,7 +133,8 @@ def login():
 @app.route('/logout')
 @login_required
 def logout():
-    login_user(current_user)
+    logout_user()
+    flash('You have successfully logged yourself out.')
     return redirect(url_for('get_all_posts'))
 
 
