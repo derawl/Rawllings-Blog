@@ -203,7 +203,7 @@ def edit_post(post_id):
         db.session.commit()
         return redirect(url_for("show_post", post_id=post.id))
 
-    return render_template("make-post.html", form=edit_form, id=current_user.id, logged_in=current_user.is_authenticated)
+    return render_template("make-post.html", form=edit_form, id=current_user.get_id(), logged_in=current_user.is_authenticated)
 
 
 @app.route("/delete/<int:post_id>")
