@@ -81,7 +81,7 @@ def load_user(user_id):
 
 @app.route('/')
 def get_all_posts():
-    ID = current_user.id
+    ID = int(current_user.id)
     posts = BlogPost.query.all()
 
     return render_template("index.html", all_posts=posts, id=ID, logged_in=current_user.is_authenticated)
@@ -189,7 +189,7 @@ def add_new_post():
 @admin_only
 def edit_post(post_id):
     post = BlogPost.query.get(post_id)
-    user_id = current_user.get_id()
+    user_id = int(current_user.id)
     edit_form = CreatePostForm(
         title=post.title,
         subtitle=post.subtitle,
