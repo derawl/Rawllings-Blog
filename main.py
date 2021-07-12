@@ -70,7 +70,7 @@ db.create_all()
 def admin_only(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if current_user.id != 1:
+        if current_user.get_id() != 1:
             return abort(403)
         return f(*args, **kwargs)
     return decorated_function
@@ -81,7 +81,7 @@ def load_user(user_id):
 
 @app.route('/')
 def get_all_posts():
-    ID = int(current_user.id)
+    ID = int(current_user.get_id())
     posts = BlogPost.query.all()
 
     return render_template("index.html", all_posts=posts, id=ID, logged_in=current_user.is_authenticated)
@@ -189,7 +189,7 @@ def add_new_post():
 @admin_only
 def edit_post(post_id):
     post = BlogPost.query.get(post_id)
-    user_id = int(current_user.id)
+    user_id = int(current_user.get_id())
     edit_form = CreatePostForm(
         title=post.title,
         subtitle=post.subtitle,
