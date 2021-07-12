@@ -82,7 +82,7 @@ def load_user(user_id):
 @app.route('/')
 def get_all_posts():
     ID=0
-    user_id = int(current_user.get_id())
+    user_id = current_user.get_id()
     if user_id != None:
         ID = user_id
     posts = BlogPost.query.all()
