@@ -133,6 +133,7 @@ def login():
 @app.route('/logout')
 @login_required
 def logout():
+    login_user(current_user)
     return redirect(url_for('get_all_posts'))
 
 
