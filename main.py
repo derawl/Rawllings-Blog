@@ -187,6 +187,7 @@ def add_new_post():
 @admin_only
 def edit_post(post_id):
     post = BlogPost.query.get(post_id)
+    user_id = current_user.get_id()
     edit_form = CreatePostForm(
         title=post.title,
         subtitle=post.subtitle,
@@ -203,7 +204,7 @@ def edit_post(post_id):
         db.session.commit()
         return redirect(url_for("show_post", post_id=post.id))
 
-    return render_template("make-post.html", form=edit_form, id=current_user.get_id(), logged_in=current_user.is_authenticated)
+    return render_template("make-post.html", form=edit_form, id=user_id, logged_in=current_user.is_authenticated)
 
 
 @app.route("/delete/<int:post_id>")
