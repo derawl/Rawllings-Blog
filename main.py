@@ -10,6 +10,8 @@ from forms import CreatePostForm, RegistrationForm, LoginForm, CommentForm
 from flask_gravatar import Gravatar
 from functools import wraps
 import os
+import unicodedata
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
@@ -81,9 +83,11 @@ def load_user(user_id):
 
 @app.route('/')
 def get_all_posts():
-    ID=0
+    ID = 0
     user_id = current_user.get_id()
-    if len(user_id) > 0:
+    if user_id == None:
+        ID = 0
+    else:
         ID = user_id
     posts = BlogPost.query.all()
 
