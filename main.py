@@ -81,6 +81,15 @@ def admin_only(f):
 def load_user(user_id):
     return User.query.get(user_id)
 
+USER_ID = 0
+user_id = current_user.get_id()
+if user_id == None:
+    USER_ID = 0
+else:
+    ID = user_id
+nUser= unicodedata.normalize('NFKD', USER_ID).encode('ASCII', 'ignore')
+decoded = nUser.decode()
+
 @app.route('/')
 def get_all_posts():
     ID = 0
@@ -198,7 +207,6 @@ def add_new_post():
 @admin_only
 def edit_post(post_id):
     post = BlogPost.query.get(post_id)
-    user_id = int(current_user.get_id())
     edit_form = CreatePostForm(
         title=post.title,
         subtitle=post.subtitle,
@@ -215,7 +223,7 @@ def edit_post(post_id):
         db.session.commit()
         return redirect(url_for("show_post", post_id=post.id))
 
-    return render_template("make-post.html", form=edit_form, id=user_id, logged_in=current_user.is_authenticated)
+    return render_template("make-post.html", form=edit_form, id=USER_ID, logged_in=current_user.is_authenticated)
 
 
 @app.route("/delete/<int:post_id>")
