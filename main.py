@@ -91,9 +91,9 @@ def get_all_posts():
         ID = user_id
     posts = BlogPost.query.all()
     nData = unicodedata.normalize('NFKD', ID).encode('ASCII', 'ignore')
-    print(nData.decode())
+    decoded = nData.decode()
 
-    return render_template("index.html", all_posts=posts, id=nData, logged_in=current_user.is_authenticated)
+    return render_template("index.html", all_posts=posts, id=int(decoded), logged_in=current_user.is_authenticated)
 
 
 @app.route('/register', methods=['GET', 'POST'])
