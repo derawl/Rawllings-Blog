@@ -92,7 +92,7 @@ def get_all_posts():
     else:
         ID = user_id
     posts = BlogPost.query.all()
-    nData = unicodedata.normalize('NFKD', ID).encode('ASCII', 'ignore')
+    nData = unicodedata.normalize('NFKD', str(ID)).encode('ASCII', 'ignore')
     decoded = nData.decode()
 
     return render_template("index.html", all_posts=posts, id=int(decoded), logged_in=current_user.is_authenticated)
