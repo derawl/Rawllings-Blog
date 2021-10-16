@@ -187,7 +187,7 @@ def add_new_post():
         db.session.add(new_post)
         db.session.commit()
         return redirect(url_for("get_all_posts"))
-    return render_template("make-post.html", form=form, logged_in=current_user.is_authenticated)
+    return render_template("make-post.html", form=form, is_edit=False, logged_in=current_user.is_authenticated)
 
 
 @app.route("/edit-post/<int:post_id>")
@@ -211,16 +211,8 @@ def edit_post(post_id):
         db.session.commit()
         return redirect(url_for("show_post", post_id=post.id))
 
-    USER_ID = 0
-    user_id = current_user.get_id()
-    if user_id == None:
-        USER_ID = 0
-    else:
-        USER_ID = user_id
-    nUser = unicodedata.normalize('NFKD', USER_ID).encode('ASCII', 'ignore')
-    decoded = nUser.decode()
 
-    return render_template("make-post.html", form=edit_form, id=int(decoded), logged_in=current_user.is_authenticated)
+    return render_template("make-post.html", form=edit_form, is_edit=True, logged_in=current_user.is_authenticated)
 
 
 @app.route("/delete/<int:post_id>")
