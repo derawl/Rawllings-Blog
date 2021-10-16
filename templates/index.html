@@ -34,6 +34,9 @@
             on {{post.date}}
             {% if id == 1 %}
               <a href="{{url_for('delete_post', post_id=post.id) }}">✘</a>
+            <div class="clearfix">
+              <a href="{{url_for('edit_post', post_id=post.id) }}">Edit Post</a>
+        </div>
             {% endif %}
           
           </p>
