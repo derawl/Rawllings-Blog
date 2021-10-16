@@ -85,17 +85,12 @@ def load_user(user_id):
 
 @app.route('/')
 def get_all_posts():
-    ID = 0
-    user_id = current_user.get_id()
-    if user_id == None:
-        ID = 0
-    else:
-        ID = user_id
+    Id = 0
+    if current_user.is_authenticated:
+        Id = current_user.id
     posts = BlogPost.query.all()
-    nData = unicodedata.normalize('NFKD', str(ID)).encode('ASCII', 'ignore')
-    decoded = nData.decode()
 
-    return render_template("index.html", all_posts=posts, id=int(decoded), logged_in=current_user.is_authenticated)
+    return render_template("index.html", all_posts=posts, id=Id, logged_in=current_user.is_authenticated)
 
 
 @app.route('/register', methods=['GET', 'POST'])
