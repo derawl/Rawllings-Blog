@@ -96,7 +96,7 @@ def get_all_posts(page):
     else:
         page = 1
 
-    pages = BlogPost.query.paginate(page=page, per_page=1)
+    pages = BlogPost.query.paginate(page=page, per_page=5)
 
     return render_template("index.html", all_posts=posts, pages=pages, id=Id, logged_in=current_user.is_authenticated)
 
