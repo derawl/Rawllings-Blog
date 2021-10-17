@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, flash, abort
+from flask import Flask, render_template, request, redirect, url_for, flash, abort
 from flask_bootstrap import Bootstrap
 from flask_ckeditor import CKEditor
 from datetime import date
@@ -83,14 +83,22 @@ def load_user(user_id):
 
 
 
-@app.route('/')
-def get_all_posts():
+@app.route('/', methods=['GET'], defaults={"page": 1})
+@app.route('/<int:page>', methods=['GET'])
+def get_all_posts(page):
     Id = 0
     if current_user.is_authenticated:
         Id = current_user.id
     posts = BlogPost.query.all()
 
-    return render_template("index.html", all_posts=posts, id=Id, logged_in=current_user.is_authenticated)
+    if page:
+        page = int(page)
+    else:
+        page = 1
+
+    pages = BlogPost.query.paginate(page=page, per_page=1)
+
+    return render_template("index.html", all_posts=posts, pages=pages, id=Id, logged_in=current_user.is_authenticated)
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -225,4 +233,4 @@ def delete_post(post_id):
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(debug=True)

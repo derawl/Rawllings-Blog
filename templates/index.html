@@ -19,7 +19,7 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
-        {% for post in all_posts %}
+        {% for post in pages.items %}
         <div class="post-preview">
           <a href="{{ url_for('show_post', post_id=post.id) }}">
             <h2 class="post-title">
@@ -52,7 +52,32 @@
           </div>
         {% endif %}
       </div>
+
+
     </div>
+<div class="col-lg-8 col-md-10 mx-auto"style="text-align:center;">
+    <nav aria-label="...">
+  <ul class="pagination">
+    <li class="page-item {% if not pages.has_prev%} disabled {% endif %}">
+      <a href="/{{pages.prev_num}}"><span class="page-link">Previous</span></a>
+    </li>
+
+    {% for link in pages.iter_pages() %}
+          <li class="page-item {% if link==pages.page %} active {% endif %}">
+            <a class="page-link" href="/{{link}}" >
+              {{link}}
+              <span class="sr-only">(current)</span>
+      </a>
+    </li>
+    {% endfor %}
+
+
+    <li class="page-item {% if not pages.has_next %} disabled {% endif %}">
+      <a class="page-link" href="/{{pages.next_num}}">Next</a>
+    </li>
+  </ul>
+</nav>
+</div>
   </div>
   <hr>
 <script>
